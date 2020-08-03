@@ -1,0 +1,41 @@
+{% extends 'moviereviews/base.html' %}
+
+{% block content %}
+
+<h2>so far so good</h2>
+<form method="get">
+  <input type="text" name="query">
+  <button type="submit">movie query</button>
+</form>
+{% if movies %}
+<!-- <div>{{ movies }}</div> -->
+  {% for movie in movies %}
+    {% if movie.multimedia %}
+      <img src="{{ movie.multimedia.src }}" width="{{ movie.multimedia.width }}">
+    {% else %}
+      <div style="width: 100px; height: 100px; border: 1px solid blue;">no image</div>
+    {% endif %}
+    <p>
+      <a data-index={{ forloop.counter }} href="">
+        <strong>{{ forloop.counter }}. {{ movie.display_title }}</strong>
+      </a>
+    </p>
+    <p><strong><em>{{ movie.headline }}</em></strong>
+      <span style="width: 20px;  display: inline-block;"></span>
+      {% if movie.opening_date %}
+      (released {{ movie.opening_date }})
+      {% else %}
+      (opened some time a while back)
+      {% endif %}
+      <br /> by {{ movie.byline }} 
+
+    </p>
+    <p>{{ movie.summary_short }}</p>
+    <a href="{{ movie.link.url }}">{{ movie.link.suggested_link_text }}</a>
+    <hr>
+  {% endfor %}
+  <!-- <p><strong>{{ title }}</strong></p>
+  <p>{{ review }}</p> -->
+{% endif %}
+
+{% endblock %}
